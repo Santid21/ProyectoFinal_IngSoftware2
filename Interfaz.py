@@ -7,11 +7,44 @@ from tkinter import *
 from tkinter import ttk,StringVar
 from tkinter import  messagebox
 
+from clientes import *
+from Conexion import *
+
 
 class FormularioClientes:
+ 
+ global base
+ base = None 
 
- def Formulario():
-  try:
+ global texboxId
+ texboxId = None
+ 
+ global textBoxNombres
+ textBoxNombres = None
+
+ global textBoxApellidos
+ textBoxApellidos = None 
+ 
+ global combo
+ combo = None 
+
+ global groupbox
+ groupbox = None 
+ 
+ global tree
+ tree = None 
+
+def Formulario():
+
+   global texboxId
+   global textBoxNombres
+   global textBoxApellidos
+   global combo
+   global base 
+   global groupbox
+   global tree
+
+   try:
      base = Tk()
      base.geometry("1200x300")
      base.title ("formulario python")
@@ -37,7 +70,7 @@ class FormularioClientes:
      combo.grid(row=3,column=1)
      selectSexo.set("Masculino")
 
-     Button(groupBox,text="Guardar",width=10).grid(row=4,column=0)
+     Button(groupBox,text="Guardar",width=10, command=GuardarRegistros).grid(row=4,column=0)
      Button(groupBox,text="Modificar",width=10).grid(row=4,column=1)
      Button(groupBox,text="Eliminar",width=10).grid(row=4,column=2)
 
@@ -58,22 +91,33 @@ class FormularioClientes:
      tree.column("# 4",anchor=CENTER)
      tree.heading("# 4",text="Sexo")
 
-
-
      tree.pack()
 
-
-
-
-
-
-     
-     
      
      base.mainloop()
 
-  except ValueError as error:
+   except ValueError as error:
      print("error al mostrar la interfaz,error:{}".format(error))
-        
- Formulario()
 
+def GuardarRegistros():
+        
+        global textBoxNombres,textBoxApellidos,combo,groupbox
+
+        try:
+           if textBoxNombres is None or textBoxApellidos is None or combo is None:
+              print("Los widgets no estan initializados")
+              return
+           nombres = textBoxNombres.get()
+           apellidos = textBoxApellidos.get()
+           sexo = combo.get() 
+           
+           Cclientes.ingresarClientes(nombres,apellidos,sexo)
+           messagebox.showinfo("informacion","Los datos fueron guardados")
+
+           textBoxNombres.delete(0,END)
+           textBoxApellidos.delete(0,END)
+         
+        except ValueError as error:
+           print("Error al ingresar los datos {}".format(error))
+
+Formulario()
