@@ -35,7 +35,6 @@ class FormularioClientes:
  tree = None 
 
 def Formulario():
-
    global texboxId
    global textBoxNombres
    global textBoxApellidos
@@ -91,9 +90,14 @@ def Formulario():
      tree.column("# 4",anchor=CENTER)
      tree.heading("# 4",text="Sexo")
 
+     #Agregar los datos a la tabla y mostrar la tabla
+     for row in Cclientes.MostrarDatos():
+        tree.insert("","end",values=row)
+     
+     tree.bind("<<treeviewselect>>",seleccionarRegistro)
+     
      tree.pack()
 
-     
      base.mainloop()
 
    except ValueError as error:
@@ -114,10 +118,44 @@ def GuardarRegistros():
            Cclientes.ingresarClientes(nombres,apellidos,sexo)
            messagebox.showinfo("informacion","Los datos fueron guardados")
 
+           ActualizarTreeView()
+
            textBoxNombres.delete(0,END)
            textBoxApellidos.delete(0,END)
          
         except ValueError as error:
            print("Error al ingresar los datos {}".format(error))
+
+def ActualizarTreeView():
+   global tree
+   try:
+   #borrar elementos actuales del treeview
+      tree.delete(*tree.get_children())   
+   #obtener nuevos datos
+      datos = Cclientes.MostrarDatos()
+   #insertar los nuevos datos
+      for row in datos:
+   #Cclientes.MostrarDatos():
+         tree.insert("","end",values=row)
+   except ValueError as error :
+      print("Error al actualizar la tabla {}",format(error))
+
+def seleccionarRegistro(event):
+ try:
+      itemSeleccionado = tree.focus()
+
+      if itemSeleccionado:
+       values = tree.item(itemSeleccionado)["values"]
+
+      texboxId.delete(0,END)
+      texboxId.insert(0,values[0]) 
+      textBoxNombres.delete(0,END)
+      textBoxNombres.insert(0,values[1]) 
+      textBoxApellidos.delete(0,END)
+      textBoxApellidos.insert(0,values[2])
+      combo.set(values[3])
+ except ValueError as error:
+    print("Error al seleccionar registro {}".format(error))
+
 
 Formulario()

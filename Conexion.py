@@ -1,8 +1,7 @@
 import mysql.connector
 
 class Cconexion:
-    
-    
+ 
  def ConexionBaseDeDatos():
      try:
          conexion = mysql.connector.connect(user='root',password='santiD2.1',
