@@ -1,4 +1,6 @@
-from Conexion import *
+from src.Data_interface.Conexion import Cconexion,mysql
+
+
 
 class Cclientes:
 

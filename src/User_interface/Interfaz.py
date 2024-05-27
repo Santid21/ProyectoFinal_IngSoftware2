@@ -7,10 +7,8 @@ from tkinter import *
 from tkinter import ttk,StringVar
 from tkinter import  messagebox
 
-from clientes import *
-from Conexion import *
-
-
+from src.Bussines_layer.clientes import Cclientes
+from src.Data_interface.Conexion import Cconexion
 class FormularioClientes:
  
  global base
