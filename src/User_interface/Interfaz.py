@@ -32,7 +32,7 @@ class FormularioClientes:
  global tree
  tree = None 
 
-def Formulario():
+def InterfazFormulario():
    global textBoxId
    global textBoxNombres
    global textBoxApellidos
@@ -217,4 +217,4 @@ def EliminacionRegistros():
 
 
 
-Formulario()
+InterfazFormulario()

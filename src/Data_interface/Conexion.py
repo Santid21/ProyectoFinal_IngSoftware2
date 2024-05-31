@@ -3,6 +3,7 @@ import mysql.connector
 class Cconexion:
  
  def ConexionBaseDeDatos():
+     conexion = None
      try:
          conexion = mysql.connector.connect(user='root',password='santiD2.1',
                                        host='127.0.0.1',
